@@ -122,10 +122,11 @@ npm run dev
    ```bash
    aws cloudfront create-invalidation \
      --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
-     --paths "/*"
+     --paths "/index.html" "/favicon.svg" "/favicon.ico"
    ```
 
-   这样可以让终端用户尽快拿到新的 HTML 和静态资源。
+   - 只清除可能变化的文件缓存
+   - 带 hash 的静态资源文件（如 `assets/index-xxx.js`）由于文件名包含版本信息，无需清除缓存
 
 ---
 
@@ -139,6 +140,7 @@ npm run dev
   - 可以强调：这正是典型的 SPA 部署模式：
     - HTML 快速更新，不能被长时间缓存
     - 静态资源带 hash，可长时间缓存以提升性能
+    - 部署时只清除必要的文件缓存，带 hash 的文件无需清除
 
 - **发布 + 人工确认**
   - 在 GitHub Actions 里演示：
@@ -155,4 +157,4 @@ npm run dev
 - 使用 GitHub Environments 的「Required reviewers」做正式环境审批
 - 将本仓库的工作流迁移到你自己的项目，直接复用「单桶 + 不同缓存策略」的做法
 
-本 Demo 的目标是：用尽量少的文件，清晰展示**SPA + S3 + CloudFront + GitHub Actions + 差异化缓存策略**的完整链路。
+本 Demo 的目标是：用尽量少的文件，清晰展示**SPA + S3 + CloudFront + GitHub Actions + 差异化缓存策略 + 优化缓存失效**的完整链路。

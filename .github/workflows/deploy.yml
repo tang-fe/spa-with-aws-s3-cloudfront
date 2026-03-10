@@ -71,5 +71,5 @@ jobs:
         run: |
           aws cloudfront create-invalidation \
             --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
-            --paths "/*"
+            --paths "/index.html" "/favicon.svg" "/favicon.ico"
 
