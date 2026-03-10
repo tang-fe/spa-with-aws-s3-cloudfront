@@ -1,0 +1,54 @@
+name: Rollback SPA by index.html version
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "输入 ROLLBACK 确认回滚 index.html 到指定版本"
+        required: true
+        type: string
+      version_id:
+        description: "要回滚到的 index.html VersionId"
+        required: true
+        type: string
+
+jobs:
+  rollback:
+    if: ${{ github.event.inputs.confirm == 'ROLLBACK' }}
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      S3_BUCKET_PRIMARY: ${{ secrets.S3_BUCKET_PRIMARY }}
+      CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Rollback index.html to specific VersionId
+        env:
+          TARGET_VERSION_ID: ${{ github.event.inputs.version_id }}
+        run: |
+          if [ -z "$TARGET_VERSION_ID" ]; then
+            echo "version_id 不能为空"
+            exit 1
+          fi
+
+          aws s3api copy-object \
+            --bucket "${S3_BUCKET_PRIMARY}" \
+            --copy-source "${S3_BUCKET_PRIMARY}/index.html?versionId=${TARGET_VERSION_ID}" \
+            --key "index.html"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
+            --paths "/index.html" "/*"
+

@@ -1,0 +1,217 @@
+:root {
+  color-scheme: light dark;
+  --bg: #050816;
+  --bg-elevated: rgba(15, 23, 42, 0.9);
+  --bg-elevated-strong: rgba(15, 23, 42, 1);
+  --border-subtle: rgba(148, 163, 184, 0.4);
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.16);
+  --accent-strong: #0ea5e9;
+  --danger: #f97373;
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+  --shadow-soft: 0 18px 60px rgba(15, 23, 42, 0.76);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top left, #0f172a, #020617 50%, #000);
+  color: var(--text-main);
+}
+
+.page {
+  min-height: 100vh;
+  padding: 32px 20px 40px;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.header {
+  padding: 20px 24px;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.18), transparent 55%),
+    radial-gradient(circle at 100% 0%, rgba(249, 115, 22, 0.16), transparent 55%),
+    rgba(15, 23, 42, 0.95);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(28px);
+}
+
+.header h1 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  letter-spacing: 0.03em;
+}
+
+.header p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.nav {
+  margin-top: 12px;
+  display: inline-flex;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+}
+
+.nav-link {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.nav-link:hover {
+  color: var(--text-main);
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(148, 163, 184, 0.7);
+  transform: translateY(-0.5px);
+}
+
+.nav-link--active {
+  color: #e0f2fe;
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.3), #020617);
+  border-color: var(--accent-strong);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.8), #020617);
+  padding: 18px 18px 20px;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.85);
+}
+
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+
+.card p {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.card ul,
+.card ol {
+  padding-left: 18px;
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.card li + li {
+  margin-top: 4px;
+}
+
+.hint {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: #e0f2fe;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  font-size: 12px;
+}
+
+.release-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px 0 12px;
+}
+
+.release-item {
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.92);
+  color: var(--text-main);
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.1s ease,
+    box-shadow 0.15s ease;
+}
+
+.release-item:hover {
+  border-color: var(--accent);
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.2), #020617);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.85);
+  transform: translateY(-1px);
+}
+
+.release-item--active {
+  border-color: var(--accent-strong);
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.3), #020617);
+}
+
+.release-label {
+  font-weight: 500;
+}
+
+.release-meta {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.footer {
+  margin-top: auto;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.footer code {
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 18px 14px 26px;
+  }
+
+  .header {
+    padding: 16px 16px;
+  }
+}
+
